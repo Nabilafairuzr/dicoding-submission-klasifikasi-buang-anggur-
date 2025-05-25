@@ -114,7 +114,7 @@ Setelah semua model dilatih dan di-*tune*, performa akurasi mereka dirangkum dan
 
 Visualisasi ini secara jelas menunjukkan model mana yang memiliki akurasi tertinggi:
 
- `![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/d58243ed640d1226c13c6699c08910e61ec69bd3/percentage.jpeg)`
+ ![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/d58243ed640d1226c13c6699c08910e61ec69bd3/percentage.jpeg)
 
 
 ### 6.3. Analisis Model Terbaik: XGBoost (Tuned)
@@ -131,7 +131,7 @@ Detail performa XGBoost (Tuned) dapat dilihat dari Confusion Matrix dan Classifi
 #### 6.3.2. Analisis Feature Importance
 
 Untuk memahami fitur mana yang paling berpengaruh dalam prediksi kualitas anggur oleh model XGBoost, kita dapat melihat `feature importances`:
-`![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20feature.jpeg?raw=true)`
+![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20feature.jpeg?raw=true)
 Dari analisis ini, kita dapat melihat fitur-fitur yang paling berkontribusi terhadap model, memberikan wawasan berharga tentang karakteristik kimiawi anggur yang paling dominan dalam menentukan kualitasnya.
 
 ---
