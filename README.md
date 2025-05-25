@@ -7,7 +7,11 @@ Proyek ini bertujuan untuk membangun model *machine learning* yang dapat mempred
 Permasalahan ini relevan mengingat industri anggur global yang kompetitif. Memahami dan memprediksi kualitas dapat membantu produsen dalam pengambilan keputusan strategis, seperti peningkatan kualitas bahan baku, modifikasi proses fermentasi, atau bahkan penentuan harga.
 
 **Referensi:**
-* Dataset ini diperoleh dari UCI Machine Learning Repository: [https://archive.ics.uci.edu/dataset/186/wine+quality](https://archive.ics.uci.edu/dataset/186/wine+quality) (Pavlović, L. and Dakić, L. (2009). *Wine Quality Dataset*. UCI Machine Learning Repository. [https://archive.ics.uci.edu/dataset/186/wine+quality](https://archive.ics.uci.edu/dataset/186/wine+quality))
+
+[1] S. Aich, A. A. Al-Absi, K. L. Hui, J. T. Lee, and M. Sain, "A classification approach with different feature sets to predict the quality of different types of wine using machine learning techniques," in *2018 20th International Conference on Advanced Communication Technology (ICACT)*, Chuncheon, Korea (South), 2018, pp. 1-2. doi: 10.23919/ICACT.2018.8323673.
+
+[2] P. Cortez, A. Cerdeira, F. Almeida, T. Matos, and J. Reis, "Modelling wine preferences by data mining from physicochemical properties," *Decision Support Systems*, vol. 47, no. 4, pp. 547-553, 2009. ISSN: 0167-9236.
+
 
 ## 2. Business Understanding
 
