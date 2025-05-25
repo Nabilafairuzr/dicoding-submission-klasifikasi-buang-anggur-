@@ -8,7 +8,6 @@ Permasalahan ini relevan mengingat industri anggur global yang kompetitif. Memah
 
 **Referensi:**
 * Dataset ini diperoleh dari UCI Machine Learning Repository: [https://archive.ics.uci.edu/dataset/186/wine+quality](https://archive.ics.uci.edu/dataset/186/wine+quality) (Pavlović, L. and Dakić, L. (2009). *Wine Quality Dataset*. UCI Machine Learning Repository. [https://archive.ics.uci.edu/dataset/186/wine+quality](https://archive.ics.uci.edu/dataset/186/wine+quality))
-* [Tambahkan referensi lain jika Anda menggunakan riset/jurnal tambahan untuk latar belakang atau metodologi]
 
 ## 2. Business Understanding
 
@@ -38,7 +37,7 @@ Dataset yang digunakan adalah "Wine Quality Red" dari UCI Machine Learning Repos
 * **Jumlah Kolom/Fitur:** 12 kolom
 * **Kondisi Data:** Data bersih, tidak ada nilai yang hilang (non-null count = 1599 untuk semua kolom). Tipe data sebagian besar float64, kecuali kolom target asli `quality` yang bertipe int64.
 
-**Tautan Sumber Data:** [https://archive.ics.uci.edu/dataset/186/wine+quality](https://archive.ics.uci.edu/dataset/186/wine+quality)
+**Tautan Sumber Data:** [https://archive.ics.uci.edu/dataset/186/wine+quality]
 
 **Variabel/Fitur pada Data:**
 
@@ -115,8 +114,8 @@ Setelah semua model dilatih dan di-*tune*, performa akurasi mereka dirangkum dan
 
 Visualisasi ini secara jelas menunjukkan model mana yang memiliki akurasi tertinggi:
 
-*(Sertakan gambar plot perbandingan akurasi di sini. Pastikan gambar diunggah dan di-link dengan benar di GitHub atau platform lain.)*
-Contoh markdown untuk gambar: `![Perbandingan Akurasi Model](path/to/your/image_comparison_plot.png)`
+ `![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/d58243ed640d1226c13c6699c08910e61ec69bd3/percentage.jpeg)`
+
 
 ### 6.3. Analisis Model Terbaik: XGBoost (Tuned)
 
@@ -132,10 +131,7 @@ Detail performa XGBoost (Tuned) dapat dilihat dari Confusion Matrix dan Classifi
 #### 6.3.2. Analisis Feature Importance
 
 Untuk memahami fitur mana yang paling berpengaruh dalam prediksi kualitas anggur oleh model XGBoost, kita dapat melihat `feature importances`:
-
-*(Sertakan gambar plot Feature Importance di sini, jika Anda telah membuatnya.)*
-Contoh markdown untuk gambar: `![Feature Importance XGBoost](path/to/your/image_feature_importance.png)`
-
+`![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20feature.jpeg?raw=true)`
 Dari analisis ini, kita dapat melihat fitur-fitur yang paling berkontribusi terhadap model, memberikan wawasan berharga tentang karakteristik kimiawi anggur yang paling dominan dalam menentukan kualitasnya.
 
 ---
