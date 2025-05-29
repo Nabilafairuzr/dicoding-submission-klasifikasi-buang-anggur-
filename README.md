@@ -2,9 +2,14 @@
 
 ## 1. Domain Proyek
 
-Proyek ini bertujuan untuk membangun model *machine learning* yang dapat memprediksi kualitas anggur merah berdasarkan karakteristik fisikokimianya. Kualitas anggur merupakan faktor krusial yang mempengaruhi nilai pasar dan kepuasan konsumen. Dengan kemampuan memprediksi kualitas, produsen anggur dapat mengoptimalkan proses produksi, mengidentifikasi faktor-faktor kunci yang mempengaruhi kualitas, serta menjaga standar produk.
+Industri anggur global adalah sektor yang sangat kompetitif, di mana kualitas produk menjadi faktor penentu utama keberhasilan dan kepuasan konsumen. Namun, evaluasi kualitas anggur secara tradisional seringkali bergantung pada penilaian sensorik oleh ahli. Metode ini, meskipun akurat, dapat bersifat subjektif, memakan waktu, dan mahal, serta sulit diterapkan secara konsisten dalam skala besar. Fluktuasi kualitas produk yang tidak terdeteksi dapat merugikan reputasi merek dan pada akhirnya, pendapatan produsen. Oleh karena itu, kebutuhan akan metode yang objektif, efisien, dan konsisten untuk menilai kualitas anggur menjadi sangat mendesak.
 
-Permasalahan ini relevan mengingat industri anggur global yang kompetitif. Memahami dan memprediksi kualitas dapat membantu produsen dalam pengambilan keputusan strategis, seperti peningkatan kualitas bahan baku, modifikasi proses fermentasi, atau bahkan penentuan harga.
+Proyek ini bertujuan untuk mengatasi permasalahan tersebut dengan membangun model machine learning yang dapat memprediksi kualitas anggur merah secara akurat berdasarkan karakteristik fisikokimianya yang terukur. Dengan memanfaatkan data objektif seperti keasaman, pH, alkohol, dan lainnya, kita dapat mengembangkan sistem prediksi otomatis yang memungkinkan produsen:
+
+Mengoptimalkan proses produksi: Mengidentifikasi faktor-faktor kunci yang mempengaruhi kualitas dan melakukan penyesuaian proses secara tepat.
+Menjaga standar produk: Memastikan konsistensi kualitas anggur sebelum dipasarkan.
+Pengambilan keputusan strategis: Memberikan wawasan berbasis data untuk penentuan harga, seleksi bahan baku, atau modifikasi fermentasi.
+Pendekatan machine learning melalui klasifikasi menawarkan solusi yang efisien. Model akan dilatih untuk mempelajari pola hubungan antara fitur-fitur fisikokimia dan label kualitas (Baik/Buruk). Setelah terlatih, model dapat memprediksi kualitas anggur baru dengan cepat dan akurat, mengurangi ketergantungan pada evaluasi sensorik manual yang mahal dan bervariasi.
 
 **Referensi:**
 
