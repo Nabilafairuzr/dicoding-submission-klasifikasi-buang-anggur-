@@ -1,42 +1,44 @@
 # Proyek Klasifikasi Kualitas Anggur Merah
 
 ## 1. Domain Proyek
+Industri anggur global merupakan sektor yang sangat kompetitif, di mana kualitas produk menjadi faktor utama dalam menentukan kepuasan konsumen dan keberhasilan bisnis. Kualitas anggur yang tinggi tidak hanya memperkuat citra merek, tetapi juga berkontribusi langsung terhadap nilai jual produk di pasar. Oleh karena itu, evaluasi kualitas anggur secara akurat dan konsisten merupakan aspek krusial dalam proses produksi.
 
-Industri anggur global adalah sektor yang sangat kompetitif, di mana kualitas produk menjadi faktor penentu utama keberhasilan dan kepuasan konsumen. Namun, evaluasi kualitas anggur secara tradisional seringkali bergantung pada penilaian sensorik oleh ahli. Metode ini, meskipun akurat, dapat bersifat subjektif, memakan waktu, dan mahal, serta sulit diterapkan secara konsisten dalam skala besar. Fluktuasi kualitas produk yang tidak terdeteksi dapat merugikan reputasi merek dan pada akhirnya, pendapatan produsen. Oleh karena itu, kebutuhan akan metode yang objektif, efisien, dan konsisten untuk menilai kualitas anggur menjadi sangat mendesak.
+Namun, penilaian kualitas anggur secara tradisional umumnya masih mengandalkan metode sensorik oleh panel ahli. Meskipun pendekatan ini dianggap akurat, terdapat sejumlah kendala yang melekat pada proses tersebut. Evaluasi sensorik bersifat subjektif, memerlukan waktu yang tidak sedikit, dan menuntut biaya tinggi. Selain itu, penerapannya dalam skala besar menjadi tantangan tersendiri karena keterbatasan sumber daya manusia dan potensi ketidakkonsistenan antar evaluator. Akibatnya, fluktuasi kualitas yang tidak terdeteksi dapat terjadi dan berdampak negatif terhadap reputasi serta pendapatan produsen.
 
-Proyek ini bertujuan untuk mengatasi permasalahan tersebut dengan membangun model machine learning yang dapat memprediksi kualitas anggur merah secara akurat berdasarkan karakteristik fisikokimianya yang terukur. Dengan memanfaatkan data objektif seperti keasaman, pH, alkohol, dan lainnya, kita dapat mengembangkan sistem prediksi otomatis yang memungkinkan produsen:
+Permasalahan ini menunjukkan adanya kebutuhan mendesak akan metode penilaian kualitas anggur yang lebih objektif, efisien, dan dapat diandalkan. Salah satu pendekatan yang menjanjikan adalah pemanfaatan teknologi machine learning untuk mengembangkan sistem prediksi berbasis data.
 
-Mengoptimalkan proses produksi: Mengidentifikasi faktor-faktor kunci yang mempengaruhi kualitas dan melakukan penyesuaian proses secara tepat.
-Menjaga standar produk: Memastikan konsistensi kualitas anggur sebelum dipasarkan.
-Pengambilan keputusan strategis: Memberikan wawasan berbasis data untuk penentuan harga, seleksi bahan baku, atau modifikasi fermentasi.
-Pendekatan machine learning melalui klasifikasi menawarkan solusi yang efisien. Model akan dilatih untuk mempelajari pola hubungan antara fitur-fitur fisikokimia dan label kualitas (Baik/Buruk). Setelah terlatih, model dapat memprediksi kualitas anggur baru dengan cepat dan akurat, mengurangi ketergantungan pada evaluasi sensorik manual yang mahal dan bervariasi.
+Dengan memanfaatkan data fisikokimia yang terukur seperti tingkat keasaman, kadar alkohol, dan nilai pH, machine learning dapat digunakan untuk membangun model klasifikasi yang mampu mengidentifikasi kualitas anggur secara otomatis. Model ini diharapkan dapat membantu produsen dalam:
+* Mengoptimalkan proses produksi, melalui identifikasi faktor-faktor kunci yang memengaruhi kualitas.
+* Menjaga konsistensi produk, dengan memastikan standar kualitas sebelum produk dipasarkan.
+* Mendukung pengambilan keputusan strategis, seperti penentuan harga, seleksi bahan baku, atau modifikasi proses fermentasi.
+Dengan pendekatan ini, produsen anggur tidak lagi sepenuhnya bergantung pada evaluasi manual yang mahal dan bervariasi, melainkan dapat memanfaatkan sistem prediksi cepat dan akurat berbasis data.
 
 **Referensi:**
 
-[1] S. Aich, A. A. Al-Absi, K. L. Hui, J. T. Lee, and M. Sain, "A classification approach with different feature sets to predict the quality of different types of wine using machine learning techniques," in *2018 20th International Conference on Advanced Communication Technology (ICACT)*, Chuncheon, Korea (South), 2018, pp. 1-2. doi: 10.23919/ICACT.2018.8323673.
-
-[2] P. Cortez, A. Cerdeira, F. Almeida, T. Matos, and J. Reis, "Modelling wine preferences by data mining from physicochemical properties," *Decision Support Systems*, vol. 47, no. 4, pp. 547-553, 2009. ISSN: 0167-9236.
-
+* Aich, S., Al-Absi, A. A., Hui, K. L., Lee, J. T., & Sain, M. (2018, February). A classification approach with different feature sets to predict the quality of different types of wine using machine learning techniques. In 2018 20th International Conference on Advanced Communication Technology (ICACT) (pp. 1–2). Chuncheon, Korea (South). https://doi.org/10.23919/ICACT.2018.8323673
+* Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Modelling wine preferences by data mining from physicochemical properties. Decision Support Systems, 47(4), 547–553. https://doi.org/10.1016/j.dss.2009.05.016
 
 ## 2. Business Understanding
 
 ### 2.1. Pernyataan Masalah (Problem Statement)
 
-Bagaimana cara secara akurat memprediksi kualitas anggur merah (dikategorikan sebagai 'Baik' atau 'Buruk') berdasarkan atribut fisikokimia yang terukur, sehingga produsen dapat melakukan intervensi yang tepat untuk menjaga atau meningkatkan kualitas produk mereka?
-
+1. Bagaimana cara secara akurat memprediksi kualitas anggur merah (dikategorikan sebagai Baik atau Buruk) berdasarkan atribut fisikokimia yang terukur?
+2. Fitur fisikokimia mana saja yang paling berpengaruh terhadap kualitas anggur merah?
+3. Sejauh mana performa model klasifikasi machine learning dalam memberikan prediksi yang konsisten dan dapat diandalkan untuk mendukung proses produksi?
 ### 2.2. Tujuan (Goals)
 
-1.  Mengembangkan model klasifikasi *machine learning* yang dapat memprediksi kualitas anggur merah.
-2.  Mencapai akurasi prediksi model di atas 75% pada data pengujian.
-3.  Mengidentifikasi fitur-fitur fisikokimia yang paling berpengaruh terhadap kualitas anggur.
+1. Mengembangkan model klasifikasi machine learning yang mampu memprediksi kualitas anggur merah berdasarkan data fisikokimia.
+2. Mengidentifikasi dan menganalisis fitur-fitur fisikokimia yang paling signifikan dalam menentukan kualitas anggur.
+3. Mencapai tingkat akurasi prediksi di atas 75% pada data pengujian untuk memastikan keandalan model dalam praktik nyata.
+
 
 ### 2.3. Pernyataan Solusi (Solution Statement)
 
 Untuk mencapai tujuan tersebut, kami mengusulkan solusi sebagai berikut:
 
-1.  **Penggunaan Multiple Algoritma:** Akan digunakan dua atau lebih algoritma klasifikasi (`Logistic Regression`, `Random Forest Classifier`, dan `XGBoost Classifier`) untuk membandingkan performa dan memilih model terbaik.
-2.  **Hyperparameter Tuning:** Untuk model berkinerja tinggi seperti `Random Forest` dan `XGBoost`, akan dilakukan *hyperparameter tuning* menggunakan `GridSearchCV` untuk mengoptimalkan performa mereka melampaui *baseline*.
-3.  **Metrik Evaluasi Akurasi:** Akurasi (`accuracy_score`) akan menjadi metrik utama untuk mengukur kinerja model. Selain itu, `Confusion Matrix` dan `Classification Report` akan digunakan untuk analisis yang lebih mendalam mengenai *precision*, *recall*, dan *F1-score* untuk setiap kelas.
+1.  **Penggunaan Multiple Algoritma:** Akan digunakan dua atau lebih algoritma klasifikasi (`Logistic Regression`, `Random Forest Classifier`, dan `XGBoost Classifier`) untuk membandingkan performa dan memilih model terbaik. Untuk menjawab masalah tentang fitur paling berpengaruh, akan dilakukan analisis feature importance pada model berbasis pohon (seperti Random Forest dan XGBoost) untuk mengidentifikasi atribut fisikokimia yang paling signifikan dalam menentukan kualitas anggur.
+3.  **Hyperparameter Tuning:** Untuk model berkinerja tinggi seperti `Random Forest` dan `XGBoost`, akan dilakukan *hyperparameter tuning* menggunakan `GridSearchCV` untuk mengoptimalkan performa mereka melampaui *baseline*.
+4.  **Metrik Evaluasi Akurasi:** Akurasi (`accuracy_score`) akan menjadi metrik utama untuk mengukur kinerja model. Selain itu, `Confusion Matrix` dan `Classification Report` akan digunakan untuk analisis yang lebih mendalam mengenai *precision*, *recall*, dan *F1-score* untuk setiap kelas.
 
 ## 3. Data Understanding
 
