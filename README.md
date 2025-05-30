@@ -68,7 +68,36 @@ Dataset yang digunakan adalah "Wine Quality Red" dari UCI Machine Learning Repos
 | `quality`             | Skor kualitas anggur (berdasarkan data sensorik, skala 0-10). Ini adalah target asli.                              |
 
 **Eksplorasi Data Awal:**
-Dilakukan pemeriksaan `df.info()` untuk ringkasan tipe data dan nilai non-null, serta `df.describe()` untuk statistik deskriptif guna memahami sebaran nilai dan potensi *outlier* pada setiap fitur. Pemeriksaan `df.isnull().sum()` mengonfirmasi tidak ada nilai yang hilang.
+Dilakukan pemeriksaan `df.info()` untuk ringkasan tipe data dan nilai non-null, serta `df.describe()` untuk statistik deskriptif guna memahami sebaran nilai dan potensi *outlier* pada setiap fitur. Pemeriksaan `df.isnull().sum()` mengonfirmasi tidak ada nilai yang hilang. Terdapat 240 baris duplikat dalam dataset. Data duplikat berpotensi menyebabkan bias dalam pelatihan model, sehingga perlu dihapus.
+
+Untuk masing-masing kolom numerik, dilakukan deteksi outlier menggunakan metode Interquartile Range (IQR). Nilai yang berada di luar batas bawah dan atas dianggap outlier.
+```
+for col in df.columns:
+    if df[col].dtype != 'object':
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+        outliers = df[(df[col] < lower_bound) | (df[col] > upper_bound)]
+```
+Hasil:
+
+Fitur	Jumlah Outlier
+fixed acidity	49
+volatile acidity	19
+citric acid	1
+residual sugar	155
+chlorides	112
+free sulfur dioxide	30
+total sulfur dioxide	55
+density	45
+pH	35
+sulphates	59
+alcohol	13
+quality	28
+
+Dilakukan capping dengan mengganti outlier menggunakan batas bawah/atas yang dihitung dari IQR. Ini menjaga distribusi data agar tetap stabil namun tidak terlalu terpengaruh oleh nilai ekstrem.
 
 ## 4. Data Preparation
 
