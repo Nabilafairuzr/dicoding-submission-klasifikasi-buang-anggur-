@@ -97,93 +97,150 @@ Pada tahap ini, data disiapkan agar sesuai untuk pemodelan *machine learning*.
 4.  **Feature Scaling (StandardScaler):**
     * Fitur diskalakan menggunakan `StandardScaler` sehingga memiliki rata-rata 0 dan standar deviasi 1. Ini penting untuk algoritma yang sensitif terhadap skala fitur (seperti Logistic Regression) dan juga bermanfaat untuk model berbasis pohon.
 
-## 5. Modeling
+## 5. Model Deployment
 
-Pada tahap ini, tiga model klasifikasi diimplementasikan, dilatih, dan di-tune untuk memprediksi kualitas anggur. Setiap model dipilih berdasarkan karakteristiknya dalam menangani masalah klasifikasi biner dan kemampuannya untuk mengidentifikasi pola dalam data.
+Pada tahap ini, tiga model klasifikasi diimplementasikan, dilatih, dan dioptimalkan untuk memprediksi kualitas anggur. Pemilihan model didasarkan pada kemampuannya dalam menangani masalah klasifikasi biner dan mengidentifikasi pola yang tersembunyi dalam data.
 
-5.1.  **Fungsi Pelatihan dan Evaluasi Model:**
-    Untuk memastikan konsistensi dalam pelatihan dan evaluasi model, sebuah fungsi kustom bernama train_and_evaluate_model dibuat. Fungsi ini menerima model dan data pelatihan/pengujian, kemudian melatih model, melakukan prediksi, dan mencetak metrik evaluasi utama (accuracy_score, confusion_matrix, classification_report). Fungsi ini juga mampu memvisualisasikan confusion matrix untuk analisis yang lebih intuitif.
+Untuk menjaga konsistensi dalam proses pelatihan dan evaluasi, digunakan sebuah fungsi kustom bernama `train_and_evaluate_model`. Fungsi ini menerima input berupa model dan data pelatihan/pengujian, kemudian:
+- Melatih model dengan data pelatihan
+- Melakukan prediksi pada data pengujian
+- Mencetak metrik evaluasi seperti `accuracy_score`, `confusion_matrix`, dan `classification_report`
+- Menampilkan visualisasi confusion matrix untuk mempermudah analisis performa model
 
-5.2.  **Pelatihan**
-**Model 1: Logistic Regression**
-a. Pembahasan Cara Kerja: Logistic Regression adalah algoritma klasifikasi linier yang digunakan untuk memprediksi probabilitas suatu kelas, biasanya untuk masalah klasifikasi biner. Meskipun namanya mengandung "Regression," ia bekerja dengan memetakan input ke probabilitas antara 0 dan 1 melalui fungsi sigmoid. Jika probabilitas yang dihasilkan melewati ambang batas tertentu (misalnya, 0.5), maka data tersebut diklasifikasikan ke satu kelas, dan sebaliknya. Ini mencoba menemukan hubungan linier terbaik antara fitur input dan log-odds dari kelas target.
-b. Pembahasan Parameter: Model ini dilatih dengan parameter default dari Scikit-learn, dengan beberapa penyesuaian spesifik:
-* random_state=42: Parameter ini digunakan untuk memastikan reproduktivitas hasil model, sehingga setiap kali kode dijalankan dengan random_state yang sama, hasil inisialisasi internal model juga akan sama.
+### 5.1 Model 1: Logistic Regression
 
-* solver='liblinear': Ini adalah algoritma optimasi yang digunakan untuk menemukan koefisien model. liblinear dipilih karena efisien untuk dataset kecil dan cocok untuk model yang mendukung regularisasi L1 dan L2.
+**1. Pembahasan Cara Kerja**  
+Logistic Regression merupakan algoritma klasifikasi linier yang digunakan untuk memodelkan probabilitas suatu kelas dalam masalah klasifikasi biner. Algoritma ini menggunakan fungsi sigmoid untuk mengkonversi kombinasi linier dari fitur input menjadi probabilitas bernilai antara 0 dan 1. Jika nilai probabilitas melebihi ambang batas tertentu (misalnya 0.5), maka data diklasifikasikan ke kelas positif, sebaliknya ke kelas negatif. Model ini bekerja dengan mencari hubungan linier antara fitur dan log-odds dari target.
 
-c. Kelebihan/Kekurangan:
-* Kelebihan: Mudah diinterpretasikan karena hubungannya linier, sangat efisien dan cepat dalam pelatihan, serta memberikan probabilitas keluaran yang berguna.
-* Kekurangan: Asumsi hubungan linier antara fitur dan log-odds target dapat membatasi performa pada data yang memiliki hubungan non-linier kompleks. Rentan terhadap outlier dan memerlukan penskalaan fitur.
+**2. Pembahasan Parameter**  
+Model ini dilatih menggunakan pustaka Scikit-learn dengan parameter sebagai berikut:
+- `random_state=42`: Digunakan untuk memastikan hasil yang konsisten saat pelatihan diulang.
+- `solver='liblinear'`: Digunakan karena efisien untuk dataset kecil dan mendukung regularisasi L1 maupun L2.
 
-**Model 2: Random Forest Classifier (Tuned)**
-a. Pembahasan Cara Kerja: Random Forest adalah metode ansambel berbasis pohon keputusan yang bekerja dengan membangun banyak pohon keputusan secara independen. Setiap pohon dilatih pada subset data yang di-bootstrapping (pengambilan sampel acak dengan penggantian) dan subset fitur yang dipilih secara acak. Untuk klasifikasi, prediksi akhir ditentukan oleh voting mayoritas dari prediksi masing-masing pohon. Mekanisme ini secara efektif mengurangi masalah overfitting yang sering terjadi pada satu pohon keputusan tunggal dan meningkatkan kemampuan generalisasi model.
+Parameter lainnya dibiarkan sebagai default karena telah sesuai dengan karakteristik data.
 
-b. Pembahasan Parameter (Hasil Tuning): Model Random Forest di-tune menggunakan GridSearchCV untuk menemukan kombinasi hyperparameter terbaik yang meningkatkan akurasi. Parameter grid yang digunakan untuk pencarian adalah:
-* n_estimators: [100, 200, 300] (Jumlah pohon dalam hutan)
-max_features: ['sqrt', 'log2'] (Jumlah fitur yang dipertimbangkan untuk setiap pemisahan)
-* max_depth: [10, 20, None] (Kedalaman maksimum pohon, None berarti simpul diperluas sampai semua daun murni atau sampai semua daun berisi kurang dari min_samples_split sampel)
-* min_samples_split: [2, 5] (Jumlah minimum sampel yang dibutuhkan untuk membagi node internal)
-* min_samples_leaf: [1, 2] (Jumlah minimum sampel yang dibutuhkan di setiap node daun)
-* GridSearchCV dengan cv=5 (5-fold cross-validation) dan scoring='accuracy' digunakan. Model terbaik yang ditemukan dari tuning akan memiliki hyperparameter optimal yang digunakan untuk evaluasi akhir.
-* Parameter Terbaik yang Ditemukan (Contoh, sesuaikan dengan output Anda):
-{'max_depth': 20, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200}
+**3. Kelebihan/Kekurangan**  
+- Kelebihan: Mudah diinterpretasikan, efisien dan cepat dilatih, serta menghasilkan probabilitas yang dapat digunakan untuk analisis lebih lanjut.  
+- Kekurangan: Asumsi hubungan linier dapat membatasi performa ketika data memiliki pola non-linier yang kompleks. Rentan terhadap outlier dan memerlukan penskalaan fitur.
 
-c. Kelebihan/Kekurangan:
-Kelebihan: Sangat efektif dalam mengurangi overfitting, mampu menangani banyak fitur (termasuk fitur non-linier dan interaksi), dan dapat memberikan estimasi feature importance.
-Kekurangan: Kurang dapat diinterpretasikan dibandingkan pohon keputusan tunggal karena kompleksitas banyak pohon. Proses pelatihan bisa lebih lambat jika jumlah pohon sangat banyak.
 
-**Model 3: XGBoost Classifier (Tuned)**
-a. Pembahasan Cara Kerja: XGBoost (eXtreme Gradient Boosting) adalah implementasi yang sangat efisien dan populer dari algoritma Gradient Boosting. Ia membangun model secara sekuensial, di mana setiap pohon baru (disebut weak learner) berusaha mengoreksi kesalahan yang dibuat oleh gabungan pohon-pohon sebelumnya. XGBoost menambahkan regularisasi (L1 dan L2) untuk mencegah overfitting dan mendukung paralelisasi, membuatnya sangat cepat dan kuat. Ini sering menjadi pilihan utama karena performa tinggi dan kemampuannya menangani berbagai jenis data.
-b. Pembahasan Parameter (Hasil Tuning): Model XGBoost di-tune menggunakan GridSearchCV untuk mengoptimalkan performanya. Parameter grid yang digunakan untuk pencarian adalah:
-* n_estimators: [100, 200, 300] (Jumlah pohon)
-* learning_rate: [0.01, 0.05, 0.1] (Ukuran langkah pembelajaran)
-* max_depth: [3, 5, 7] (Kedalaman maksimum pohon)
-* subsample: [0.7, 0.8, 0.9] (Rasio sampel data untuk setiap pohon)
-* colsample_bytree: [0.7, 0.8, 0.9] (Rasio kolom/fitur untuk setiap pohon)
-* gamma: [0, 0.1, 0.2] (Reduksi loss minimum yang diperlukan untuk melakukan pemisahan simpul)
-* GridSearchCV dengan cv=5 (5-fold cross-validation) dan scoring='accuracy' digunakan. Model terbaik yang ditemukan dari tuning akan memiliki hyperparameter optimal yang digunakan untuk evaluasi akhir.
-* Parameter Terbaik yang Ditemukan (Contoh, sesuaikan dengan output Anda):
+### 5.2 Model 2: Random Forest Classifier (Tuned)
+
+**1. Pembahasan Cara Kerja**  
+Random Forest adalah algoritma ensambel berbasis pohon keputusan yang terdiri dari banyak pohon yang dilatih secara independen. Setiap pohon dilatih menggunakan teknik bootstrapping (pengambilan sampel acak dengan penggantian) dan subset acak dari fitur. Prediksi akhir diambil berdasarkan voting mayoritas dari seluruh pohon. Pendekatan ini mengurangi risiko overfitting yang umum terjadi pada pohon keputusan tunggal dan meningkatkan generalisasi model.
+
+**2. Pembahasan Parameter**  
+Model ini dioptimalkan menggunakan `GridSearchCV` untuk mencari kombinasi parameter terbaik. Parameter grid yang digunakan:
+- `n_estimators`: [100, 200, 300] – Jumlah pohon dalam hutan
+- `max_features`: ['sqrt', 'log2'] – Jumlah fitur yang dipertimbangkan dalam pemisahan node
+- `max_depth`: [10, 20, None] – Kedalaman maksimum pohon
+- `min_samples_split`: [2, 5] – Jumlah minimum sampel untuk membagi node internal
+- `min_samples_leaf`: [1, 2] – Jumlah minimum sampel pada setiap daun pohon
+
+
+**3. Kelebihan/Kekurangan**  
+- Kelebihan: Sangat efektif dalam mengurangi overfitting, mampu menangani banyak fitur (termasuk fitur non-linier dan interaksi), dan dapat memberikan estimasi feature importance.<br>
+- Kekurangan: Kurang dapat diinterpretasikan dibandingkan pohon keputusan tunggal karena kompleksitas banyak pohon. Proses pelatihan bisa lebih lambat jika jumlah pohon sangat banyak.
+
+### **Model 3: XGBoost Classifier (Tuned)**
+**1. Pembahasan Cara Kerja**  
+XGBoost (eXtreme Gradient Boosting) adalah algoritma boosting yang membangun pohon keputusan secara bertahap untuk memperbaiki kesalahan model sebelumnya. Setiap pohon baru difokuskan untuk meminimalkan sisa kesalahan (residual) dari gabungan pohon sebelumnya. XGBoost mendukung regularisasi L1 dan L2, sehingga mampu mengendalikan kompleksitas model dan mencegah overfitting. Selain itu, XGBoost sangat efisien secara komputasi karena mendukung eksekusi paralel dan memiliki optimasi bawaan untuk kecepatan tinggi serta kemampuan menangani missing value secara internal.
+
+**2. Pembahasan Parameter**  
+Model ini dioptimalkan menggunakan `GridSearchCV` untuk mencari kombinasi hyperparameter terbaik. Parameter grid yang digunakan:
+- `n_estimators`: [100, 200, 300]
+- `learning_rate`: [0.01, 0.05, 0.1]
+- `max_depth`: [3, 5, 7]
+- `subsample`: [0.7, 0.8, 0.9]
+- `colsample_bytree`: [0.7, 0.8, 0.9]
+- `gamma`: [0, 0.1, 0.2]
+
+Tuning dilakukan menggunakan `GridSearchCV` dengan `cv=5` (5-fold cross-validation) dan `scoring='accuracy'`. Parameter terbaik yang diperoleh (contoh hasil tuning):
+
+```python
 {'colsample_bytree': 0.8, 'gamma': 0, 'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 200, 'subsample': 0.8}
+```
 
-c. Kelebihan/Kekurangan:
-Kelebihan: Performa sangat tinggi dan sering menjadi pemenang di berbagai kompetisi machine learning. Efisien dalam komputasi dan mampu menangani missing values secara internal. Memiliki fitur regularisasi yang kuat untuk mencegah overfitting.
-Kekurangan: Bisa kompleks untuk di-tune karena banyaknya hyperparameter. Model kurang mudah diinterpretasikan dibandingkan model linier atau pohon tunggal.
+**3. Kelebihan/Kekurangan**
+- Kelebihan: Performa sangat tinggi dan sering menjadi pemenang di berbagai kompetisi machine learning. Efisien dalam komputasi dan mampu menangani missing values secara internal. Memiliki fitur regularisasi yang kuat untuk mencegah overfitting.
+- Kekurangan: Bisa kompleks untuk di-tune karena banyaknya hyperparameter. Model kurang mudah diinterpretasikan dibandingkan model linier atau pohon tunggal.
+
 ## 6. Evaluation
 
-### 6.1. Ringkasan Performa Model
+### 6.1. Metrik Evaluasi yang Digunakan
 
-Setelah semua model dilatih dan di-*tune*, performa akurasi mereka dirangkum dan dibandingkan:
+Untuk mengevaluasi performa model, digunakan beberapa metrik yang relevan dengan kasus klasifikasi biner, yaitu:
 
-| Model                 | Akurasi |
-| :-------------------- | :------ |
-| XGBoost (Tuned)       | 0.783088|
-| Random Forest (Tuned) | 0.772059|
-| Logistic Regression   | 0.735294|
+- **Accuracy**: Proporsi prediksi yang benar dibandingkan total prediksi.
+$$\frac{TP + TN}{TP + TN + FP + FN}$$
+- **Precision**: Proporsi prediksi positif yang benar-benar positif.
+$$\text{Precision} = \frac{TP}{TP + FP}$$
+- **Recall**: Proporsi data positif yang berhasil terdeteksi.
+$$\text{Recall} = \frac{TP}{TP + FN}$$
+- **F1-Score**: Rata-rata harmonis dari precision dan recall, berguna saat data tidak seimbang.
+$$F1 Score = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$$
+- **Confusion Matrix**: Untuk melihat distribusi prediksi benar dan salah secara lebih rinci.
+$$
+\begin{bmatrix}
+TN & FP \\
+FN & TP \\
+\end{bmatrix}
+$$
+
+Pemilihan metrik ini penting karena **tujuan bisnis** dalam konteks ini adalah meminimalkan kesalahan dalam mengklasifikasikan kualitas anggur, terutama dalam menghindari anggur berkualitas rendah diklasifikasikan sebagai berkualitas tinggi, yang dapat berdampak buruk pada kepuasan konsumen dan citra merek.
 
 
-### 6.2. Visualisasi Perbandingan Akurasi Model
 
-Visualisasi ini secara jelas menunjukkan model mana yang memiliki akurasi tertinggi:
+### 6.2. Ringkasan Performa Model
 
- ![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20(1).png?raw=true)
+Setelah semua model dilatih dan dituning, berikut hasil evaluasi akurasi pada data pengujian:
+
+| Model                 | Akurasi  |
+| :-------------------- | :------- |
+| XGBoost (Tuned)       | 0.783088 |
+| Random Forest (Tuned) | 0.772059 |
+| Logistic Regression   | 0.735294 |
+
+XGBoost menunjukkan performa terbaik dari ketiganya.
 
 
-### 6.3. Analisis Model Terbaik: XGBoost (Tuned)
 
-Berdasarkan perbandingan akurasi, **XGBoost (Tuned)** adalah model terbaik yang dipilih untuk menyelesaikan permasalahan ini, karena memberikan akurasi tertinggi pada data pengujian.
+### 6.3. Visualisasi Perbandingan Akurasi Model
 
-#### 6.3.1. Analisis Confusion Matrix dan Classification Report
+Visualisasi berikut memberikan gambaran jelas perbandingan akurasi antar model:
 
-Detail performa XGBoost (Tuned) dapat dilihat dari Confusion Matrix dan Classification Report yang dihasilkan saat evaluasi model. Metrik `Accuracy` mengukur proporsi prediksi yang benar dari total prediksi.
+![Perbandingan Akurasi Model](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/d58243ed640d1226c13c6699c08910e61ec69bd3/percentage.jpeg?raw=true)
 
-* **Confusion Matrix:** Menunjukkan jumlah True Positives (TP), True Negatives (TN), False Positives (FP), dan False Negatives (FN). Ini penting untuk memahami jenis kesalahan yang dibuat model.
-* **Classification Report:** Menyajikan metrik `Precision` (proporsi positif yang benar), `Recall` (proporsi positif yang teridentifikasi dengan benar), dan `F1-Score` (rata-rata harmonis precision dan recall) untuk setiap kelas. Metrik ini sangat relevan untuk dataset dengan kelas yang mungkin tidak seimbang.
 
-#### 6.3.2. Analisis Feature Importance
 
-Untuk memahami fitur mana yang paling berpengaruh dalam prediksi kualitas anggur oleh model XGBoost, kita dapat melihat `feature importances`:
-![image alt](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20feature.jpeg?raw=true)
-Dari analisis ini, kita dapat melihat fitur-fitur yang paling berkontribusi terhadap model, memberikan wawasan berharga tentang karakteristik kimiawi anggur yang paling dominan dalam menentukan kualitasnya.
+### 6.4. Analisis Model Terbaik: XGBoost (Tuned)
 
----
+#### 6.4.1. Confusion Matrix dan Classification Report
+
+Hasil evaluasi model XGBoost menunjukkan:
+
+- Akurasi tinggi dibandingkan model lain
+- Precision dan recall seimbang, yang berarti model tidak bias terhadap salah satu kelas
+- Confusion Matrix menunjukkan distribusi kesalahan model secara detail
+
+Metrik ini memperkuat keandalan XGBoost dalam memprediksi kualitas anggur secara akurat dan konsisten.
+
+#### 6.4.2. Feature Importance
+
+Untuk memahami kontribusi tiap fitur dalam prediksi, ditampilkan visualisasi feature importance dari model XGBoost:
+
+![Feature Importance](https://github.com/Nabilafairuzr/dicoding-submission-klasifikasi-buang-anggur-/blob/main/image%20feature.jpeg?raw=true)
+
+Hasil ini memberikan **wawasan bisnis penting** mengenai fitur kimiawi mana yang paling menentukan kualitas anggur. Informasi ini dapat dimanfaatkan oleh produsen untuk **mengontrol proses produksi dan meningkatkan kualitas produk**.
+
+
+
+### 6.5. Keterkaitan dengan Business Understanding
+
+Model yang dibangun telah menjawab **seluruh problem statement** dan **goals** yang ditetapkan, yaitu:
+
+- Menghasilkan sistem klasifikasi otomatis yang dapat membedakan kualitas anggur secara efisien
+- Memberikan dasar pengambilan keputusan berbasis data terkait proses produksi anggur
+- Membantu perusahaan mengurangi risiko distribusi produk berkualitas rendah ke konsumen
+
+Dengan model terbaik (XGBoost), prediksi kualitas dapat dilakukan secara **lebih akurat dan cepat**, sehingga memberikan **dampak langsung terhadap kualitas layanan dan kepuasan pelanggan**.
