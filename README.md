@@ -79,22 +79,26 @@ Dataset yang digunakan adalah "Wine Quality Red" dari UCI Machine Learning Repos
 
 Pada tahap ini, data disiapkan agar sesuai untuk pemodelan *machine learning*.
 
-1.  **Mendefinisikan Masalah Klasifikasi Biner:**
+1.  **Penghapusan Data Duplikat**
+   Sebelum melanjutkan ke tahapan berikutnya, penting untuk memastikan bahwa dataset tidak mengandung baris duplikat. Data duplikat dapat menyebabkan model menjadi bias atau overfit karena model akan melihat informasi yang sama berulang kali, memberikan bobot yang tidak semestinya pada observasi tersebut. Untuk mengatasi ini, kami menggunakan fungsi `df.drop_duplicates()` untuk menghapus semua baris yang identik dalam dataset. Ini memastikan bahwa setiap observasi dalam data bersifat unik, menghasilkan dataset yang lebih bersih dan representatif untuk pelatihan model.
+2.  **Penanganan Outlier dengan Capping (Winsorizing)**
+   Outlier adalah nilai-nilai ekstrem yang secara signifikan berbeda dari sebagian besar data lainnya. Keberadaan outlier dapat secara negatif memengaruhi kinerja model machine learning, terutama model yang sensitif terhadap distribusi data (seperti regresi linier atau K-Means). Untuk mengelola dampak outlier tanpa menghilangkan baris data yang berharga, kami menerapkan metode capping atau winsorizing menggunakan fungsi `cap_outliers_iqr()`. Teknik ini mengganti nilai outlier dengan batas bawah (Q1 - 1.5 * IQR) atau batas atas (Q3 + 1.5 * IQR) yang telah ditentukan menggunakan metode Interquartile Range (IQR). Dengan demikian, kami menjaga data tetap utuh sambil mengurangi efek ekstrim dari nilai-nilai outlier, yang penting untuk stabilitas dan akurasi model.
+4.  **Mendefinisikan Masalah Klasifikasi Biner:**
     * Kolom `quality` (skala 3-8) diubah menjadi masalah klasifikasi biner.
     * Anggur dengan `quality` < 6 dikategorikan sebagai **'Buruk' (0)**.
     * Anggur dengan `quality` >= 6 dikategorikan sebagai **'Baik' (1)**.
     * Kolom baru `quality_label` dibuat untuk ini.
 
-2.  **Pemisahan Fitur (X) dan Target (y):**
+5.  **Pemisahan Fitur (X) dan Target (y):**
     * Fitur (X) mencakup semua kolom karakteristik fisikokimia kecuali `quality` asli dan `quality_label`.
     * Target (y) adalah kolom `quality_label`.
 
-3.  **Pemisahan Data Training dan Testing:**
+6.  **Pemisahan Data Training dan Testing:**
     * Data dibagi menjadi 80% data pelatihan dan 20% data pengujian (`test_size=0.20`).
     * `random_state=42` digunakan untuk reproduktibilitas.
     * `stratify=y` digunakan untuk memastikan distribusi kelas target yang seimbang antara set pelatihan dan pengujian.
 
-4.  **Feature Scaling (StandardScaler):**
+7.  **Feature Scaling (StandardScaler):**
     * Fitur diskalakan menggunakan `StandardScaler` sehingga memiliki rata-rata 0 dan standar deviasi 1. Ini penting untuk algoritma yang sensitif terhadap skala fitur (seperti Logistic Regression) dan juga bermanfaat untuk model berbasis pohon.
 
 ## 5. Model Deployment
